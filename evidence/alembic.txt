@@ -1,0 +1,21 @@
+== alembic current（先把库拉回 head）
+20261125_01 (head)
+
+== alembic downgrade base
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running downgrade 20261125_01 -> , 创建会后问卷两表：event_surveys / survey_responses
+
+== downgrade 后剩余表数（应为 0）
+0
+
+== alembic upgrade head
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> 20261125_01, 创建会后问卷两表：event_surveys / survey_responses
+
+== upgrade 后表数（应为 2）
+2
+
+== alembic check
+No new upgrade operations detected.

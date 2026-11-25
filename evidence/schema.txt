@@ -1,0 +1,68 @@
+                               Table "public.event_surveys"
+   Column   |           Type           | Collation | Nullable |          Default           
+------------+--------------------------+-----------+----------+----------------------------
+ id         | uuid                     |           | not null | gen_random_uuid()
+ org_id     | uuid                     |           | not null | 
+ site_id    | uuid                     |           |          | 
+ created_at | timestamp with time zone |           | not null | now()
+ created_by | uuid                     |           |          | 
+ updated_at | timestamp with time zone |           | not null | now()
+ deleted_at | timestamp with time zone |           |          | 
+ event_id   | uuid                     |           | not null | 
+ title      | text                     |           | not null | 
+ intro      | text                     |           |          | 
+ questions  | jsonb                    |           | not null | 
+ open_at    | timestamp with time zone |           | not null | 
+ close_at   | timestamp with time zone |           | not null | 
+ status     | character varying(16)    |           | not null | 'draft'::character varying
+ anonymous  | boolean                  |           | not null | false
+Indexes:
+    "pk_event_surveys" PRIMARY KEY, btree (id)
+    "ix_event_surveys_status" btree (status)
+    "uq_event_surveys_org_event" UNIQUE, btree (org_id, event_id) WHERE deleted_at IS NULL
+Check constraints:
+    "ck_event_surveys_questions_array" CHECK (jsonb_typeof(questions) = 'array'::text)
+    "ck_event_surveys_status" CHECK (status::text = ANY (ARRAY['draft'::character varying, 'published'::character varying, 'closed'::character varying]::text[]))
+    "ck_event_surveys_window" CHECK (close_at > open_at)
+Referenced by:
+    TABLE "survey_responses" CONSTRAINT "fk_survey_responses_survey" FOREIGN KEY (survey_id) REFERENCES event_surveys(id) ON DELETE CASCADE
+
+                           Table "public.survey_responses"
+     Column     |           Type           | Collation | Nullable |      Default      
+----------------+--------------------------+-----------+----------+-------------------
+ id             | uuid                     |           | not null | gen_random_uuid()
+ org_id         | uuid                     |           | not null | 
+ site_id        | uuid                     |           |          | 
+ created_at     | timestamp with time zone |           | not null | now()
+ created_by     | uuid                     |           |          | 
+ updated_at     | timestamp with time zone |           | not null | now()
+ deleted_at     | timestamp with time zone |           |          | 
+ survey_id      | uuid                     |           | not null | 
+ event_id       | uuid                     |           | not null | 
+ member_id      | uuid                     |           | not null | 
+ signup_id      | uuid                     |           |          | 
+ answers        | jsonb                    |           | not null | 
+ submitted_at   | timestamp with time zone |           | not null | now()
+ client_version | character varying(32)    |           |          | 
+Indexes:
+    "pk_survey_responses" PRIMARY KEY, btree (id)
+    "ix_survey_responses_event_member" btree (event_id, member_id)
+    "uq_survey_responses_survey_member" UNIQUE CONSTRAINT, btree (survey_id, member_id)
+Check constraints:
+    "ck_survey_responses_answers_object" CHECK (jsonb_typeof(answers) = 'object'::text)
+Foreign-key constraints:
+    "fk_survey_responses_survey" FOREIGN KEY (survey_id) REFERENCES event_surveys(id) ON DELETE CASCADE
+
+       tbl        |              conname               |                                                                definition                                                                 
+------------------+------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------
+ alembic_version  | alembic_version_pkc                | PRIMARY KEY (version_num)
+ event_surveys    | ck_event_surveys_questions_array   | CHECK ((jsonb_typeof(questions) = 'array'::text))
+ event_surveys    | ck_event_surveys_status            | CHECK (((status)::text = ANY ((ARRAY['draft'::character varying, 'published'::character varying, 'closed'::character varying])::text[])))
+ event_surveys    | ck_event_surveys_window            | CHECK ((close_at > open_at))
+ event_surveys    | pk_event_surveys                   | PRIMARY KEY (id)
+ survey_responses | ck_survey_responses_answers_object | CHECK ((jsonb_typeof(answers) = 'object'::text))
+ survey_responses | fk_survey_responses_survey         | FOREIGN KEY (survey_id) REFERENCES event_surveys(id) ON DELETE CASCADE
+ survey_responses | pk_survey_responses                | PRIMARY KEY (id)
+ survey_responses | uq_survey_responses_survey_member  | UNIQUE (survey_id, member_id)
+(9 rows)
+

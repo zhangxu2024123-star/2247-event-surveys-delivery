@@ -1,0 +1,168 @@
+{
+  "org_id": "11111111-1111-4111-8111-111111111111",
+  "site_id": "22222222-2222-4222-8222-222222222222",
+  "created_by": "33333333-3333-4333-8333-333333333333",
+  "note": "全部为虚构示例数据：企业名、会员、活动均为编造，可直接导入空库做联调。event_id 固定，便于重复执行时按 (org_id, event_id) upsert。",
+  "surveys": [
+    {
+      "event_id": "e0000001-0000-4000-8000-000000000001",
+      "title": "9 月会员开放日 · 会后问卷",
+      "intro": "本问卷约 1 分钟完成，用于改进下场活动的组织方式。所有题目均可跳过，除注明必答项。",
+      "anonymous": false,
+      "status": "published",
+      "open_offset_days": -1,
+      "close_offset_days": 6,
+      "questions": [
+        {
+          "id": "q1",
+          "type": "rating",
+          "title": "对本次活动的整体满意度",
+          "required": true,
+          "scale": "star5"
+        },
+        {
+          "id": "q2",
+          "type": "single",
+          "title": "您本次的参与方式",
+          "required": true,
+          "options": [
+            { "id": "o1", "label": "现场参加" },
+            { "id": "o2", "label": "线上直播" },
+            { "id": "o3", "label": "观看回放" }
+          ]
+        },
+        {
+          "id": "q3",
+          "type": "multi",
+          "title": "哪些环节对您帮助较大",
+          "required": false,
+          "min_select": 0,
+          "max_select": 3,
+          "options": [
+            { "id": "o1", "label": "主题分享" },
+            { "id": "o2", "label": "会员自我介绍" },
+            { "id": "o3", "label": "一对一洽谈" },
+            { "id": "o4", "label": "场地参观" },
+            { "id": "o5", "label": "茶歇交流" }
+          ]
+        },
+        {
+          "id": "q4",
+          "type": "text",
+          "title": "对下次活动的建议",
+          "required": false,
+          "max_length": 200
+        }
+      ]
+    },
+    {
+      "event_id": "e0000002-0000-4000-8000-000000000002",
+      "title": "10 月行业沙龙 · 嘉宾评分",
+      "intro": "三位嘉宾的分享已经结束，请按实际感受打分。评分仅用于筛选后续讲师，不对外公布。",
+      "anonymous": true,
+      "status": "published",
+      "open_offset_days": -2,
+      "close_offset_days": 5,
+      "questions": [
+        {
+          "id": "q1",
+          "type": "single",
+          "title": "您评价的是哪位嘉宾",
+          "required": true,
+          "options": [
+            { "id": "g1", "label": "嘉宾甲（智能制造）" },
+            { "id": "g2", "label": "嘉宾乙（供应链金融）" },
+            { "id": "g3", "label": "嘉宾丙（园区运营）" }
+          ]
+        },
+        {
+          "id": "q2",
+          "type": "rating",
+          "title": "内容深度",
+          "required": true,
+          "scale": "star5"
+        },
+        {
+          "id": "q3",
+          "type": "rating",
+          "title": "把这场分享推荐给同行的意愿（0 完全不会，10 一定会）",
+          "required": true,
+          "scale": "nps"
+        },
+        {
+          "id": "q4",
+          "type": "multi",
+          "title": "希望这位嘉宾下次展开的部分",
+          "required": false,
+          "min_select": 0,
+          "max_select": 2,
+          "options": [
+            { "id": "o1", "label": "方法论与框架" },
+            { "id": "o2", "label": "落地案例细节" },
+            { "id": "o3", "label": "失败经验复盘" },
+            { "id": "o4", "label": "行业数据" }
+          ]
+        },
+        {
+          "id": "q5",
+          "type": "text",
+          "title": "其他想补充的评价",
+          "required": false,
+          "max_length": 300
+        }
+      ]
+    },
+    {
+      "event_id": "e0000003-0000-4000-8000-000000000003",
+      "title": "11 月主题征集 · 下期选题",
+      "intro": "下期沙龙的主题由会员投票产生。投票结果会在一周内公布。",
+      "anonymous": false,
+      "status": "draft",
+      "open_offset_days": 0,
+      "close_offset_days": 7,
+      "questions": [
+        {
+          "id": "q1",
+          "type": "multi",
+          "title": "您希望下期讨论的主题（最多选 3 项）",
+          "required": true,
+          "min_select": 1,
+          "max_select": 3,
+          "options": [
+            { "id": "o1", "label": "园区招商与产业集聚" },
+            { "id": "o2", "label": "企业数字化转型路径" },
+            { "id": "o3", "label": "人才招聘与用工成本" },
+            { "id": "o4", "label": "跨境业务合规" },
+            { "id": "o5", "label": "融资与资本对接" },
+            { "id": "o6", "label": "品牌与市场推广" }
+          ]
+        },
+        {
+          "id": "q2",
+          "type": "single",
+          "title": "偏好的活动形式",
+          "required": true,
+          "options": [
+            { "id": "o1", "label": "嘉宾分享 + 圆桌" },
+            { "id": "o2", "label": "闭门工作坊" },
+            { "id": "o3", "label": "企业走访" }
+          ]
+        },
+        {
+          "id": "q3",
+          "type": "rating",
+          "title": "上期活动的满意度（用于对比）",
+          "required": false,
+          "scale": "star5"
+        },
+        {
+          "id": "q4",
+          "type": "text",
+          "title": "如果有具体想听的问题，可以写在这里",
+          "required": false,
+          "max_length": 500
+        }
+      ]
+    }
+  ]
+}
